@@ -19,8 +19,10 @@ To configure the server, click on the little help box on the topright of the too
 
 =================================================================================
 
-Note:
-There is a way to use certain exploits to cause other clients to crash.
-Placing a '^' followed by either a 0x01 or a 0x02 byte (0x01 : '' - 0x02: '') in either the hostname, mapname, gametype or fs_game will cause the clients to crash when updating the serverlist.
-Placing it in the error message will cause them to crash upon joiing.
-I fixed this in the hostname on RepZ client as part of a deal, but as they didn't stick to it, I won't either, so feel free to exploit them ;)
+Note:  
+There is a way to use certain exploits to cause other clients to crash.  
+Placing a '^' followed by either a 0x01 or a 0x02 byte (0x01 : '' - 0x02: '') in either the hostname,  
+mapname, gametype or fs_game will cause the clients to crash when updating the serverlist.  
+Placing it in the error message will cause them to crash upon joiing.  
+I fixed this in the hostname on RepZ client as part of a deal, but as they didn't stick to it,  
+I won't either, so feel free to exploit them ;)
