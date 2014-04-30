@@ -72,7 +72,7 @@ namespace MW2_Server
             log.Print(level.System, "Mapname: " + mapname);
             log.Print(level.System, "Maxclients: " + sv_maxclients);
             log.Print(level.System, "Clients: " + clients);
-            log.Print(level.System, "Fs_game: " + fs_game);
+            log.Print(level.System, "Mod: " + fs_game);
             log.Print(level.System, "Spam: " + (spam == "" ? "No" : "Yes"));
             log.Print(level.System, "Error: " + error);
 
@@ -237,7 +237,7 @@ namespace MW2_Server
             inforesponse += "protocol\\" + protocol + "\\";
             inforesponse += "gamename\\" + gamename + "\\";
             inforesponse += "hostname\\" + hostname + "\\";
-            inforesponse += "fs_game\\" + fs_game + "\\";
+            inforesponse += "fs_game\\" + (fs_game == "" ? "" : "momo " + fs_game) + "\\";
 
             if (challenge != "")
                 inforesponse += "challenge\\" + challenge + "\\";
