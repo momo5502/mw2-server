@@ -32,7 +32,7 @@ namespace MW2_Server
         }
 
         // Thread and socket stuff
-        private Log _log;
+        private Log log;
         private Thread listening_thread;
         private Thread heartbeat_thread;
         private Socket socket;
@@ -55,26 +55,26 @@ namespace MW2_Server
 
         private void Main_Load(object sender, EventArgs e)
         {
-            _log = new Log(logBox, this);
+            log = new Log(logBox, this);
 
-            _log.Print(level.None, "MW2 Server spoofer by momo5502");
-            _log.Print(level.None, "------------------------------");
+            log.Print(level.None, "MW2 Server spoofer by momo5502");
+            log.Print(level.None, "------------------------------");
 
             Config.Read(this);
 
             this.Text = escapeColors(hostname);
 
-            _log.Print(level.System, "Starting server.");
+            log.Print(level.System, "Starting server.");
 
             // Print config
-            _log.Print(level.System, "Hostname: " + hostname);
-            _log.Print(level.System, "Gametype: " + gametype);
-            _log.Print(level.System, "Mapname: " + mapname);
-            _log.Print(level.System, "Maxclients: " + sv_maxclients);
-            _log.Print(level.System, "Clients: " + clients);
-            _log.Print(level.System, "Fs_game: " + fs_game);
-            _log.Print(level.System, "Spam: " + (spam == "" ? "No" : "Yes"));
-            _log.Print(level.System, "Error: " + error);
+            log.Print(level.System, "Hostname: " + hostname);
+            log.Print(level.System, "Gametype: " + gametype);
+            log.Print(level.System, "Mapname: " + mapname);
+            log.Print(level.System, "Maxclients: " + sv_maxclients);
+            log.Print(level.System, "Clients: " + clients);
+            log.Print(level.System, "Fs_game: " + fs_game);
+            log.Print(level.System, "Spam: " + (spam == "" ? "No" : "Yes"));
+            log.Print(level.System, "Error: " + error);
 
             bool success = false;
 
@@ -98,20 +98,20 @@ namespace MW2_Server
                 }
             }
 
-            _log.Print(level.System, "Server starting on port " + port + ".");
+            log.Print(level.System, "Server starting on port " + port + ".");
 
             // Send UPNP packet to forward the port dynamically
-            _log.Print(level.System, "Sending UPNP packet.");
+            log.Print(level.System, "Sending UPNP packet.");
             NatUtility.DeviceFound += DeviceFound;
             NatUtility.StartDiscovery();
 
             // UDP Listerner thread
-            _log.Print(level.System, "Starting listener thread.");
+            log.Print(level.System, "Starting listener thread.");
             listening_thread = new Thread(ListeningThread);
             listening_thread.Start();
 
             // Heartbeat thread
-            _log.Print(level.System, "Starting heartbeat thread.");
+            log.Print(level.System, "Starting heartbeat thread.");
             heartbeat_thread = new Thread(HeartbeatThread);
             heartbeat_thread.Start();
         }
@@ -129,7 +129,7 @@ namespace MW2_Server
             device.CreatePortMap(new Mapping(Protocol.Tcp, port, port));
             device.CreatePortMap(new Mapping(Protocol.Udp, port, port));
 
-            _log.Print(level.System, "UPNP device found, mapping port " + port + ".");
+            log.Print(level.System, "UPNP device found, mapping port " + port + ".");
         }
 
         // Remove color codes from a string
@@ -141,7 +141,7 @@ namespace MW2_Server
         // Listen for incoming packets
         private void ListeningThread()
         {
-            _log.Print(level.System, "Listener thread started.");
+            log.Print(level.System, "Listener thread started.");
 
             IPEndPoint sender = new IPEndPoint(IPAddress.Any, port);
             EndPoint Remote = (EndPoint)(sender);
@@ -162,7 +162,7 @@ namespace MW2_Server
             if (spam == "")
                 return;
 
-            _log.Print(level.Output, sender.ToString() + " <-- spam");
+            log.Print(level.Output, sender.ToString() + " <-- spam");
 
             string printResponse = "print\n" + spam;
 
@@ -172,7 +172,7 @@ namespace MW2_Server
         // Send error packet with predefined error message ( client will use Com_Error to print the message )
         private void HandleErrorResponse(EndPoint sender)
         {
-            _log.Print(level.Output, sender.ToString() + " <-- error");
+            log.Print(level.Output, sender.ToString() + " <-- error");
 
             string errorResponse = "error\n" + error;
 
@@ -182,7 +182,7 @@ namespace MW2_Server
         // Stats response incomplete...
         private void HandleStatsResponse(EndPoint sender, byte[] _data)
         {
-            _log.Print(level.Output, " <-- statsResponse");
+            log.Print(level.Output, " <-- statsResponse");
 
             byte[] value = new byte[4];
             value[0] = _data[10];
@@ -201,7 +201,7 @@ namespace MW2_Server
         // Send connect reponse for client to be able to connect to server
         private void HandleConnectResponse(EndPoint sender)
         {
-            _log.Print(level.Output, sender.ToString() + " <-- connectResponse");
+            log.Print(level.Output, sender.ToString() + " <-- connectResponse");
 
             string connectResponse = "connectResponse";
 
@@ -211,7 +211,7 @@ namespace MW2_Server
         // Handle challenge requests sent by the client upon connecting
         private void HandleChallengeResponse(string challenge, EndPoint sender)
         {
-            _log.Print(level.Output, sender.ToString() + " <-- challengeResponse: " + challenge);
+            log.Print(level.Output, sender.ToString() + " <-- challengeResponse: " + challenge);
 
             string challengeResponse = "challengeResponse " + challenge;
 
@@ -221,7 +221,7 @@ namespace MW2_Server
         // Send fake server information
         private void HandleInfoResponse(string challenge, EndPoint sender)
         {
-            _log.Print(level.Output, sender.ToString() + " <-- infoResponse: " + challenge);
+            log.Print(level.Output, sender.ToString() + " <-- infoResponse: " + challenge);
 
             // Build fake inforesponse
             string inforesponse = "infoResponse\n\\";
@@ -256,7 +256,7 @@ namespace MW2_Server
             if (length > 4)
                 message = message.Substring(4);
             string[] split = message.Split((" ").ToCharArray());
-            _log.Print(level.Input, sender.ToString() + " --> " + split[0]);
+            log.Print(level.Input, sender.ToString() + " --> " + split[0]);
 
             // Handle getinfo requests
             if (message.Contains("getinfo"))
@@ -297,13 +297,13 @@ namespace MW2_Server
 
             masters.Add(masters.Count, master);
 
-            _log.Print(level.System, "Master added: " + master.name + " (" + master.endpoint.ToString() + ")");
+            log.Print(level.System, "Master added: " + master.name + " (" + master.endpoint.ToString() + ")");
         }
 
         // Handle heartbeats
         private void HeartbeatThread()
         {
-            _log.Print(level.System, "Heartbeat thread started.");
+            log.Print(level.System, "Heartbeat thread started.");
 
             addMaster("RepZ", "176.57.141.201", 20810);
             addMaster("iw4Play", "server.iw4play.de", 20810);
@@ -313,13 +313,13 @@ namespace MW2_Server
             Thread.Sleep(5000);
             while (true)
             {
-                _log.Print(level.System, "Sending heartbeat" + (masters.Count > 1 ? "s" : "") + " to master" + (masters.Count > 1 ? "s" : "") + "."); // Haha
+                log.Print(level.System, "Sending heartbeat" + (masters.Count > 1 ? "s" : "") + " to master" + (masters.Count > 1 ? "s" : "") + "."); // Haha
                 data = Encoding.ASCII.GetBytes("heartbeat " + gamename + " " + protocol);
 
                 // Send heartbeats to masters
                 for (int i = 0; i < masters.Count; i++)
                 {
-                    _log.Print(level.Output, masters[i].endpoint.ToString() + " <-- heartbeat");
+                    log.Print(level.Output, masters[i].endpoint.ToString() + " <-- heartbeat");
                     sendData(data, masters[i].endpoint);
                 }
 
