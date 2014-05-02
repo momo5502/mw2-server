@@ -52,6 +52,7 @@ namespace MW2_Server
         // Engine stuff
         private ushort protocol = 61586;
         private string gamename = "IW4";
+        private string version = "4.0-6"; // RepZ: 3.0-1
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -227,7 +228,7 @@ namespace MW2_Server
             string inforesponse = "infoResponse\n\\";
             inforesponse += "hc\\0\\";
             //inforesponse += "npid\\ 130000100000D16\\"; // Needed?
-            inforesponse += "shortversion\\3.0-1\\";
+            inforesponse += "shortversion\\" + version + "\\";
             inforesponse += "pure\\1\\";
             inforesponse += "gametype\\" + gametype + "\\";
             inforesponse += "sv_maxclients\\" + sv_maxclients + "\\";
@@ -305,6 +306,7 @@ namespace MW2_Server
         {
             log.Print(level.System, "Heartbeat thread started.");
 
+            addMaster("aiw3", "server.aiw3.net", 20810);
             addMaster("RepZ", "176.57.141.201", 20810);
             addMaster("iw4Play", "server.iw4play.de", 20810);
 
