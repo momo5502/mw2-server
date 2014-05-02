@@ -117,7 +117,7 @@ namespace MW2_Server
             heartbeat_thread.Start();
         }
 
-        // Open ports if UPNP device fount
+        // Open ports if UPNP device found
         private void DeviceFound(object sender, DeviceEventArgs args)
         {
             INatDevice device = args.Device;
