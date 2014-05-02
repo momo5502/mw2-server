@@ -44,12 +44,12 @@ namespace MW2_Server
 
             try
             {
-                form.sv_maxclients = Convert.ToUInt32(maxclients.Text);
+                form.sv_maxclients = Convert.ToInt32(maxclients.Text);
             }
             catch { }
             try
             {
-                form.clients = Convert.ToUInt32(clients.Text);
+                form.clients = Convert.ToInt32(clients.Text);
             }
             catch { }
             try

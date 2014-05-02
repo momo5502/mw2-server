@@ -44,8 +44,8 @@ namespace MW2_Server
         public string gametype = "war";
         public string mapname = "mp_afghan";
         public string error = "^5Sorry, momo5502 doesn't want you to play on this server!";
-        public uint sv_maxclients = 18;
-        public uint clients = 0;
+        public int sv_maxclients = 18;
+        public int clients = 0;
         public string fs_game = "";
         public string spam = "";
 

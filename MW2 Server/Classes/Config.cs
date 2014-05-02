@@ -53,7 +53,7 @@ namespace MW2_Server
             {
                 try
                 {
-                    form.sv_maxclients = Convert.ToUInt32(File.ReadAllText(folder + "sv_maxclients.txt"));
+                    form.sv_maxclients = Convert.ToInt32(File.ReadAllText(folder + "sv_maxclients.txt"));
                 }
                 catch { }
             }
@@ -62,7 +62,7 @@ namespace MW2_Server
             {
                 try
                 {
-                    form.clients = Convert.ToUInt32(File.ReadAllText(folder + "clients.txt"));
+                    form.clients = Convert.ToInt32(File.ReadAllText(folder + "clients.txt"));
                 }
                 catch { }
             }
