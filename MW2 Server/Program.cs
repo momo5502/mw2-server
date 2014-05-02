@@ -14,18 +14,18 @@ namespace MW2_Server
         /// </summary>
         [STAThread]
         static void Main()
-       {
-           AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
-           {
-               var assemblyName = args.Name.Split(',').First();
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                var assemblyName = args.Name.Split(',').First();
 
-               if (assemblyName == "Mono.Nat")
-               {
-                   return Assembly.Load(Properties.Resources.Mono_Nat);
-               }
+                if (assemblyName == "Mono.Nat")
+                {
+                    return Assembly.Load(Properties.Resources.Mono_Nat);
+                }
 
-               return null;
-           };
+                return null;
+            };
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
