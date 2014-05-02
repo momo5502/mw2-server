@@ -52,7 +52,7 @@ namespace MW2_Server
         // Engine stuff
         private ushort protocol = 61586;
         private string gamename = "IW4";
-        private string version = "4.0-6"; // RepZ: 3.0-1
+        private string version = "3.0-1"; // aiw3: 4.0-{rev}
 
         private void Main_Load(object sender, EventArgs e)
         {
