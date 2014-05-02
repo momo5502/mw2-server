@@ -152,7 +152,13 @@ namespace MW2_Server
             while (true)
             {
                 int recv = socket.ReceiveFrom(data, ref Remote);
-                HandlePacketData(data, recv, Remote);
+
+                try
+                {
+                    HandlePacketData(data, recv, Remote);
+                }
+                catch{} // Ignore that for now
+
                 Thread.Sleep(30);
             }
         }
