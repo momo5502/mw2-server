@@ -315,6 +315,7 @@ namespace MW2_Server
             addMaster("aiw3", "server.aiw3.net", 20810);
             addMaster("RepZ", "176.57.141.201", 20810);
             addMaster("iw4Play", "server.iw4play.de", 20810);
+            addMaster("orion", "fluxy.triobit.net", 20810);
 
             byte[] data = new byte[8192];
 
