@@ -1,6 +1,6 @@
 ﻿namespace MW2_Server
 {
-    partial class Pannel
+    partial class Panel
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Pannel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Panel));
             this.label1 = new System.Windows.Forms.Label();
             this.hostname = new System.Windows.Forms.TextBox();
             this.clients = new System.Windows.Forms.TextBox();
@@ -194,7 +194,7 @@
             this.label9.TabIndex = 17;
             this.label9.Text = "Spam:";
             // 
-            // Pannel
+            // Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -219,8 +219,8 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Pannel";
-            this.Text = "Pannel";
+            this.Name = "Panel";
+            this.Text = "Panel";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Pannel_FormClosing);
             this.Load += new System.EventHandler(this.Pannel_Load);
             this.ResumeLayout(false);

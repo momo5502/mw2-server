@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace MW2_Server
 {
-    public partial class Pannel : Form
+    public partial class Panel : Form
     {
         private Main form;
 
-        public Pannel(Main _form)
+        public Panel(Main _form)
         {
             form = _form;
             InitializeComponent();

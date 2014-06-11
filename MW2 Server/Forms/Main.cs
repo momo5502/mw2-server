@@ -355,7 +355,7 @@ namespace MW2_Server
         private void Main_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             // Popup config
-            new Pannel(this).ShowDialog();
+            new Panel(this).ShowDialog();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)

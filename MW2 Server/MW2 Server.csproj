@@ -61,19 +61,19 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Log.cs" />
-    <Compile Include="Forms\Pannel.cs">
+    <Compile Include="Forms\Panel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Pannel.Designer.cs">
-      <DependentUpon>Pannel.cs</DependentUpon>
+    <Compile Include="Forms\Panel.Designer.cs">
+      <DependentUpon>Panel.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Pannel.resx">
-      <DependentUpon>Pannel.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Panel.resx">
+      <DependentUpon>Panel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -101,6 +101,25 @@
   <ItemGroup>
     <Content Include="Resources\64.ico" />
     <None Include="Resources\Mono.Nat.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxShockwaveFlashObjects">
+      <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="ShockwaveFlashObjects">
+      <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
