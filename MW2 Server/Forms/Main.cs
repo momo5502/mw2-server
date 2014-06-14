@@ -48,6 +48,7 @@ namespace MW2_Server
         public int clients = 0;
         public string fs_game = "";
         public string spam = "";
+        public ulong npid;
 
         // Engine stuff
         private ushort protocol = 61586;
@@ -76,6 +77,9 @@ namespace MW2_Server
             log.Print(level.System, "Mod: " + fs_game);
             log.Print(level.System, "Spam: " + (spam == "" ? "No" : "Yes"));
             log.Print(level.System, "Error: " + error);
+
+            npid = 0x130000100000000 | (ulong)(new Random().Next() % 1024);
+            log.Print(level.System, "NPID: " + npid.ToString("X"));
 
             bool success = false;
 
@@ -244,7 +248,7 @@ namespace MW2_Server
             // Build fake inforesponse
             string inforesponse = "infoResponse\n\\";
             inforesponse += "hc\\0\\";
-            inforesponse += "npid\\ 130000100000D16\\";
+            inforesponse += "npid\\ " + npid.ToString("X") + "\\";
             inforesponse += "shortversion\\" + version + "\\";
             inforesponse += "pure\\1\\";
             inforesponse += "gametype\\" + gametype + "\\";
