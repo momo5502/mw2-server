@@ -310,8 +310,16 @@ namespace MW2_Server
             master.port = port;
             master.name = name;
 
-            IPAddress[] addresses = Dns.GetHostAddresses(master.ip);
-            master.endpoint = new IPEndPoint(addresses[0], master.port);
+            try
+            {
+                IPAddress[] addresses = Dns.GetHostAddresses(master.ip);
+                master.endpoint = new IPEndPoint(addresses[0], master.port);
+            }
+            catch
+            {
+                log.Print(level.System, "Failed to resolve master: " + ip + " (" + master.name + ")");
+                return;
+            }
 
             masters.Add(masters.Count, master);
 
@@ -362,7 +370,12 @@ namespace MW2_Server
             _data[2] = 0xFF;
             _data[3] = 0xFF;
 
-            socket.SendTo(_data, (_data.Length > 0x2000 ? 0x2000 : _data.Length), SocketFlags.None, server);
+            try
+            {
+                socket.SendTo(_data, (_data.Length > 0x2000 ? 0x2000 : _data.Length), SocketFlags.None, server);
+            }
+            catch{}
+
         }
 
         private void Main_HelpButtonClicked(object sender, CancelEventArgs e)
