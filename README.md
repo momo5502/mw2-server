@@ -2,7 +2,7 @@ mw2-server
 =================================================================================
 
 This tool provides the ability to create a simulated COD:MW2 server.  
-It currently supports RepZ, IW4Play and aiw3.  
+It currently supports RepZ, IW4Play and Orion and PlusMW2
 
 =================================================================================
 
