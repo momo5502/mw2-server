@@ -228,7 +228,18 @@ namespace MW2_Server
         // Send fake server information
         private void HandleInfoResponse(string challenge, EndPoint sender)
         {
-            log.Print(level.Output, sender.ToString() + " <-- infoResponse: " + challenge);
+            string optionalMasterSuffix = "";
+
+            for (int i = 0; i < masters.Count; i++)
+            {
+                if (masters[i].endpoint.Equals(sender))
+                {
+                    optionalMasterSuffix = " (" + masters[i].name + ")";
+                    break;
+                }
+            }
+
+            log.Print(level.Output, sender.ToString() + " <-- infoResponse: " + challenge + optionalMasterSuffix);
 
             // Build fake inforesponse
             string inforesponse = "infoResponse\n\\";
@@ -304,7 +315,7 @@ namespace MW2_Server
 
             masters.Add(masters.Count, master);
 
-            log.Print(level.System, "Master added: " + master.name + " (" + master.endpoint.ToString() + ")");
+            log.Print(level.System, "Master added: " + master.endpoint.ToString() + " (" + master.name + ")");
         }
 
         // Handle heartbeats
@@ -314,8 +325,10 @@ namespace MW2_Server
 
             //addMaster("aiw3", "server.aiw3.net", 20810);
             addMaster("RepZ", "176.57.141.201", 20810);
-            addMaster("iw4Play", "server.iw4play.de", 20810);
-            addMaster("orion", "fluxy.triobit.net", 20810);
+            addMaster("IW4Play", "server.iw4play.de", 20810);
+            addMaster("Orion", "fluxy.triobit.net", 20810);
+            addMaster("PlusMaster", "iw4.prod.plusmaster.ir", 20810);
+            addMaster("PlusGamer", "iw4m.plusgamer.ir", 20810); // Offline?
 
             byte[] data = new byte[8192];
 
@@ -328,7 +341,7 @@ namespace MW2_Server
                 // Send heartbeats to masters
                 for (int i = 0; i < masters.Count; i++)
                 {
-                    log.Print(level.Output, masters[i].endpoint.ToString() + " <-- heartbeat");
+                    log.Print(level.Output, masters[i].endpoint.ToString() + " <-- heartbeat (" + masters[i].name + ")");
                     sendData(data, masters[i].endpoint);
                 }
 

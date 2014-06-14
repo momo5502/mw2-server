@@ -10,10 +10,10 @@ namespace MW2_Server
 {
     public enum level
     {
-        None = 0,
-        System = 1,
-        Output = 2,
-        Input = 3
+        None,
+        System,
+        Output,
+        Input
     }
 
     class Log
