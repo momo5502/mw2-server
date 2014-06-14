@@ -244,7 +244,7 @@ namespace MW2_Server
             // Build fake inforesponse
             string inforesponse = "infoResponse\n\\";
             inforesponse += "hc\\0\\";
-            //inforesponse += "npid\\ 130000100000D16\\"; // Needed?
+            inforesponse += "npid\\ 130000100000D16\\";
             inforesponse += "shortversion\\" + version + "\\";
             inforesponse += "pure\\1\\";
             inforesponse += "gametype\\" + gametype + "\\";
