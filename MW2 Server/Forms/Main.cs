@@ -78,7 +78,7 @@ namespace MW2_Server
             log.Print(level.System, "Spam: " + (spam == "" ? "No" : "Yes"));
             log.Print(level.System, "Error: " + error);
 
-            npid = 0x130000100000000 | (ulong)(new Random().Next() % 1024);
+            npid = 0x120000100000000 | 0x555 /*(ulong)(new Random().Next() % 1024)*/; // Fuck, that fixes it for now
             log.Print(level.System, "NPID: " + npid.ToString("X"));
 
             bool success = false;
