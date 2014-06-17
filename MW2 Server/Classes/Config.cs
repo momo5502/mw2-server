@@ -3,105 +3,136 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Xml;
 using System.Threading.Tasks;
 
 namespace MW2_Server
 {
-    // Worst way of handling this, but meh :P
+    // much better way of handling it
     class Config
     {
+        // defining the xmlreader and writer
+        private static XmlReader xmlre;
+        private static XmlWriter xmlwr;
+        // defining the folder where we house all the files
         private static string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MW2 Server\\";
 
         public static void Read(Main form)
         {
+            try
+            {
+                // defining the previous xmlreader instance we created to point to our config file (it'll crash if it 
+                // doesn't exist, but we've got that covered)
+                xmlre = XmlReader.Create(folder + "config.xml");
+
+                // reads through the entire xml file
+                while (xmlre.Read())
+                {
+                    // handles the spam option
+                    if ((xmlre.NodeType == XmlNodeType.Element) && (xmlre.Name == "spam"))
+                    {
+                        // fills the user input with the xml content
+                        form.spam = xmlre.ReadElementContentAsString();
+                    }
+
+                    // same as above, but with error instead 
+                    // same applies until the end of the xmlreader loop
+                    if ((xmlre.NodeType == XmlNodeType.Element) && (xmlre.Name == "error"))
+                    {
+                        form.error = xmlre.ReadElementContentAsString();
+                    }
+
+                    if ((xmlre.NodeType == XmlNodeType.Element) && (xmlre.Name == "hostname"))
+                    {
+                        form.hostname = xmlre.ReadElementContentAsString();
+                    }
+
+                    if ((xmlre.NodeType == XmlNodeType.Element) && (xmlre.Name == "mapname"))
+                    {
+                        form.mapname = xmlre.ReadElementContentAsString();
+                    }
+
+                    if ((xmlre.NodeType == XmlNodeType.Element) && (xmlre.Name == "fs_game"))
+                    {
+                        form.fs_game = xmlre.ReadElementContentAsString();
+                    }
+
+                    if ((xmlre.NodeType == XmlNodeType.Element) && (xmlre.Name == "sv_maxclients"))
+                    {
+                        form.sv_maxclients = xmlre.ReadElementContentAsInt();
+                    }
+
+                    if ((xmlre.NodeType == XmlNodeType.Element) && (xmlre.Name == "clients"))
+                    {
+                        form.clients = xmlre.ReadElementContentAsInt();
+                    }
+
+                    if ((xmlre.NodeType == XmlNodeType.Element) && (xmlre.Name == "port"))
+                    {
+                        form.port = Convert.ToUInt16(xmlre.ReadElementContentAsInt());
+                    }
+                }
+
+                // stops it looking at the input so other parts of the process can use the file
+                xmlre.Dispose();
+            }
+
+            // crashes if the file doesn't exist/is damaged, so we create a new file
+            catch
+            {
+                // stops it looking at the input so other parts of the process can use the file
+                xmlre.Dispose();
+                // calls the xmlcreate function, which creates our new xml file
+                XmlCreate(form);
+            }
+
             if (!Directory.Exists(folder))
             {
                 return;
             }
-
-            if (File.Exists(folder + "spam.txt"))
-            {
-                form.spam = File.ReadAllText(folder + "spam.txt");
-            }
-
-            if (File.Exists(folder + "error.txt"))
-            {
-                form.error = File.ReadAllText(folder + "error.txt");
-            }
-
-            if (File.Exists(folder + "hostname.txt"))
-            {
-                form.hostname = File.ReadAllText(folder + "hostname.txt");
-            }
-
-            if (File.Exists(folder + "gametype.txt"))
-            {
-                form.gametype = File.ReadAllText(folder + "gametype.txt");
-            }
-
-            if (File.Exists(folder + "mapname.txt"))
-            {
-                form.mapname = File.ReadAllText(folder + "mapname.txt");
-            }
-
-            if (File.Exists(folder + "fs_game.txt"))
-            {
-                form.fs_game = File.ReadAllText(folder + "fs_game.txt");
-            }
-
-            if (File.Exists(folder + "sv_maxclients.txt"))
-            {
-                try
-                {
-                    form.sv_maxclients = Convert.ToInt32(File.ReadAllText(folder + "sv_maxclients.txt"));
-                }
-                catch { }
-            }
-
-            if (File.Exists(folder + "clients.txt"))
-            {
-                try
-                {
-                    form.clients = Convert.ToInt32(File.ReadAllText(folder + "clients.txt"));
-                }
-                catch { }
-            }
-
-            if (File.Exists(folder + "port.txt"))
-            {
-                try
-                {
-                    form.port = Convert.ToUInt16(File.ReadAllText(folder + "port.txt"));
-                }
-                catch { }
-            }
         }
 
-        public static void Save(Main form)
+        private static void XmlCreate(Main form)
         {
-            if (!Directory.Exists(folder))
+            // creates an instance of the filstreame
+            using (FileStream fs = new FileStream(folder + "config.xml", FileMode.Create, FileAccess.Write))
             {
-                Directory.CreateDirectory(folder);
+                // setting up the settings
+                XmlWriterSettings xmlwritersettings1 = new XmlWriterSettings();
+                // makes the xml file user readable
+                xmlwritersettings1.Indent = true;
+
+                // sets up our xmlwriter function to point to our filesystem instance
+                using(xmlwr = XmlWriter.Create(fs, xmlwritersettings1)) { 
+                    // let's start the document
+                    xmlwr.WriteStartDocument();
+                    // creates the settings element
+                    xmlwr.WriteStartElement("settings");
+
+                    // gets all the user inputted data, if there is any
+                    xmlwr.WriteElementString("hostname", form.hostname);
+                    xmlwr.WriteElementString("gametype", form.gametype);
+                    xmlwr.WriteElementString("mapname", form.mapname);
+                    xmlwr.WriteElementString("fs_game", form.fs_game);
+                    xmlwr.WriteElementString("error", form.error);
+                    xmlwr.WriteElementString("spam", form.spam);
+                    xmlwr.WriteElementString("sv_maxclients", form.sv_maxclients.ToString());
+                    xmlwr.WriteElementString("clients", form.clients.ToString());
+                    xmlwr.WriteElementString("port", form.port.ToString());
+                   
+                    // we end the settings element
+                    xmlwr.WriteEndElement();
+                    // ending the document
+                    xmlwr.WriteEndDocument();
+                    // writes it to the filesystem
+                    xmlwr.Flush();
+                }
+                // and finally, we dispose it so other parts of the program can look at the same file
+                fs.Dispose();
+                
             }
 
-            Write("hostname.txt", form.hostname);
-            Write("gametype.txt", form.gametype);
-            Write("mapname.txt", form.mapname);
-            Write("fs_game.txt", form.fs_game);
-            Write("error.txt", form.error);
-            Write("spam.txt", form.spam);
-            Write("sv_maxclients.txt", form.sv_maxclients.ToString());
-            Write("clients.txt", form.clients.ToString());
-            Write("port.txt", form.port.ToString());
-        }
 
-        private static void Write(string filename, string content)
-        {
-            var outFile = File.Open(folder + filename, FileMode.Create, FileAccess.Write);
-            var writer = new BinaryWriter(outFile);
-            writer.Write(ASCIIEncoding.ASCII.GetBytes(content));
-            writer.Dispose();
-            outFile.Dispose();
         }
     }
 }
