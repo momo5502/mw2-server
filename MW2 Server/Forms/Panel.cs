@@ -59,7 +59,7 @@ namespace MW2_Server
             catch { }
 
             form.Text = form.escapeColors(form.hostname);
-            Config.Save(form);
+            Config.XmlCreate(form);
         }
     }
 }

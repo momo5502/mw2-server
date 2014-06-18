@@ -23,7 +23,13 @@ namespace MW2_Server
             {
                 // defining the previous xmlreader instance we created to point to our config file (it'll crash if it 
                 // doesn't exist, but we've got that covered)
-                xmlre = XmlReader.Create(folder + "config.xml");
+
+                // creating settings!
+                XmlReaderSettings xmlreaderse = new XmlReaderSettings();
+                // allows for crashy characters!
+                xmlreaderse.CheckCharacters = false;
+
+                xmlre = XmlReader.Create(folder + "config.xml", xmlreaderse);
 
                 // reads through the entire xml file
                 while (xmlre.Read())
@@ -92,7 +98,7 @@ namespace MW2_Server
             }
         }
 
-        private static void XmlCreate(Main form)
+        public static void XmlCreate(Main form)
         {
             // creates an instance of the filstreame
             using (FileStream fs = new FileStream(folder + "config.xml", FileMode.Create, FileAccess.Write))
@@ -101,9 +107,12 @@ namespace MW2_Server
                 XmlWriterSettings xmlwritersettings1 = new XmlWriterSettings();
                 // makes the xml file user readable
                 xmlwritersettings1.Indent = true;
+                // allows for crashy characters!
+                xmlwritersettings1.CheckCharacters = false;
 
                 // sets up our xmlwriter function to point to our filesystem instance
-                using(xmlwr = XmlWriter.Create(fs, xmlwritersettings1)) { 
+                using (xmlwr = XmlWriter.Create(fs, xmlwritersettings1))
+                {
                     // let's start the document
                     xmlwr.WriteStartDocument();
                     // creates the settings element
@@ -119,7 +128,7 @@ namespace MW2_Server
                     xmlwr.WriteElementString("sv_maxclients", form.sv_maxclients.ToString());
                     xmlwr.WriteElementString("clients", form.clients.ToString());
                     xmlwr.WriteElementString("port", form.port.ToString());
-                   
+
                     // we end the settings element
                     xmlwr.WriteEndElement();
                     // ending the document
@@ -129,7 +138,7 @@ namespace MW2_Server
                 }
                 // and finally, we dispose it so other parts of the program can look at the same file
                 fs.Dispose();
-                
+
             }
 
 
