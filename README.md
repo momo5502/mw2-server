@@ -20,3 +20,6 @@ To configure the server, click on the little help box on the topright of the too
 - Spam: Enter any text you want, this will get displayed on every clients console when updating the server list.
 
 =================================================================================
+
+<p align="center">If you like my work, feel free to contribute:<br> 
+<a href="http://momo5504.square7.de/donate.html"><img height="35" src="http://momo5504.square7.de/Donate.png" /></a></p>
