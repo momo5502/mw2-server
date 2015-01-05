@@ -87,7 +87,7 @@ namespace MW2_Server
             catch
             {
                 // stops it looking at the input so other parts of the process can use the file
-                xmlre.Dispose();
+                if(xmlre != null) xmlre.Dispose();
                 // calls the xmlcreate function, which creates our new xml file
                 XmlCreate(form);
             }
@@ -100,6 +100,8 @@ namespace MW2_Server
 
         public static void XmlCreate(Main form)
         {
+            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+
             // creates an instance of the filstreame
             using (FileStream fs = new FileStream(folder + "config.xml", FileMode.Create, FileAccess.Write))
             {

@@ -271,6 +271,13 @@ namespace MW2_Server
                 HandleSpamResponse(sender);
         }
 
+        private void HandleJoinPartyRepsone(string challenge, EndPoint sender)
+        {
+            string challengeResponse = "challengeResponse " + challenge;
+
+            sendData(Encoding.ASCII.GetBytes(challengeResponse), (IPEndPoint)sender);
+        }
+
         // Evaluate packets and send answers
         private void HandlePacketData(byte[] data, int length, EndPoint sender)
         {
@@ -279,6 +286,11 @@ namespace MW2_Server
                 message = message.Substring(4);
             string[] split = message.Split((" ").ToCharArray());
             log.Print(level.Input, sender.ToString() + " --> " + split[0]);
+
+            if(split[0] == "2joinParty" || split[0] == "R")
+            {
+                log.Print(level.None, message);
+            }
 
             // Handle getinfo requests
             if (message.Contains("getinfo"))
@@ -335,12 +347,7 @@ namespace MW2_Server
         {
             log.Print(level.System, "Heartbeat thread started.");
 
-            //addMaster("aiw3", "server.aiw3.net", 20810);
-            addMaster("RepZ", "176.57.141.201", 20810);
             addMaster("IW4Play", "server.iw4play.de", 20810);
-            addMaster("Orion", "fluxy.triobit.net", 20810);
-            addMaster("PlusMaster", "iw4.prod.plusmaster.ir", 20810);
-            addMaster("PlusGamer", "iw4m.plusgamer.ir", 20810); // Offline?
 
             byte[] data = new byte[8192];
 

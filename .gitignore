@@ -199,3 +199,5 @@ $RECYCLE.BIN/
 us.stackdump
 
 Debug/
+MW2 Server/bin/
+MW2 Server/obj/
